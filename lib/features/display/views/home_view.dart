@@ -1,8 +1,6 @@
-import 'dart:io';
-import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:openpdf/features/display/views/pdf_view.dart';
-import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
+import 'package:flutter/material.dart';
+import 'package:openpdf/features/display/model/model.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -12,27 +10,6 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  Future<void> pickAndOpenFile() async {
-    // Use FilePicker to pick a file
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
-
-    if (result != null) {
-      // Get the file path
-      String? filePath = result.files.single.path;
-      if (filePath != null) {
-        if (context.mounted) {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => PdfView(
-                pdfWidget: SfPdfViewer.file(File(filePath)),
-              ),
-            ),
-          );
-        }
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +19,19 @@ class _HomeViewState extends State<HomeView> {
         actions: [
           IconButton(
             icon: const Icon(Icons.file_open),
-            onPressed: pickAndOpenFile,
+            onPressed: () async {
+              FilePickerResult? result = await FilePicker.platform.pickFiles();
+              FileModel fileModel = FileModel(
+                fileName: result!.files.single.name,
+                fileSize: result.files.single.size,
+                filePath: result.files.single.path!,
+              );
+              print(
+                  "**** ${fileModel.fileName} ${fileModel.fileSize} ${fileModel.filePath} *****");
+              if (context.mounted) {
+                fileModel.openFile(context, result);
+              }
+            },
           ),
         ],
       ),
