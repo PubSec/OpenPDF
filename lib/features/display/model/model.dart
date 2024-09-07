@@ -35,7 +35,7 @@ class FileModel {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('File'),
+            title: const Text('No File'),
             content: const Text('No file selected.'),
             actions: <Widget>[
               TextButton(

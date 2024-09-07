@@ -26,6 +26,7 @@ class _HomeViewState extends State<HomeView> {
                 fileSize: result.files.single.size,
                 filePath: result.files.single.path!,
               );
+
               print(
                   "**** ${fileModel.fileName} ${fileModel.fileSize} ${fileModel.filePath} *****");
               if (context.mounted) {
