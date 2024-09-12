@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:openpdf/core/theme/theme_data.dart';
 import 'package:openpdf/features/display/views/home_view.dart';
 
+// TODO: Show in 'Open with' options
 void main() {
   runApp(const MyApp());
 }

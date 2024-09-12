@@ -1,53 +1,64 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:openpdf/features/display/views/pdf_view.dart';
 import 'package:file_picker/file_picker.dart';
 
-class FileModel {
+class PickedFileModel {
   final String fileName;
-  final int fileSize;
   final String filePath;
-  final String? filePreview = '';
-
-  FileModel({
+  PickedFileModel({
     required this.fileName,
-    required this.fileSize,
     required this.filePath,
   });
-  // Checks the file and opens it
+// Handles picking and pushing the file to a view page
   Future<void> openFile(dynamic context, FilePickerResult? fileResult) async {
+    permissionChecker(context);
     if (fileResult != null) {
-      print(" ****** $fileResult *******");
-      // Get the file path
-      String? filePath = fileResult.files.single.path;
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) => PdfView(
-            pdfWidget: SfPdfViewer.file(File(filePath!)),
-            appBarTitle: fileResult.files.single.name.split('.')[0],
+            pdfWidget: SfPdfViewer.file(File(filePath)),
+            appBarTitle: fileName.split('.')[0],
           ),
         ),
       );
-    } else if (fileResult == null) {
-      // TODO: Doesn't show anything. Fix
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('No File'),
-            content: const Text('No file selected.'),
-            actions: <Widget>[
-              TextButton(
-                child: const Text('Ok'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        },
-      );
+    }
+  }
+
+// Handles Permissions
+//TODO: Change the Permission to storage or check if it works for all devices.
+  Future<void> permissionChecker(BuildContext context) async {
+    final permissionStatus = await Permission.storage.request();
+    if (!permissionStatus.isGranted) {
+      await Permission.storage.request();
+    } else if (permissionStatus.isPermanentlyDenied) {
+      if (context.mounted) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('Permission Denied'),
+              content: const Text('Go to setting and change permssions?'),
+              actions: <Widget>[
+                TextButton(
+                  child: const Text('Cancel'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                TextButton(
+                  child: const Text('Settings'),
+                  onPressed: () {
+                    openAppSettings();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      }
     }
   }
 }
