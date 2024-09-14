@@ -1,17 +1,26 @@
+import 'dart:io';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:openpdf/features/display/model/model.dart';
+import 'package:openpdf/features/display/model/pickedfilemodel.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
   const HomeView({super.key});
 
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
+  List<File>? pdfFiles;
+  bool isScanning = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('Recent'),
+        title: const Text('OpenPDF'),
         actions: [
           IconButton(
             onPressed: () async {
@@ -26,7 +35,9 @@ class HomeView extends StatelessWidget {
           )
         ],
       ),
-      body: const Center(child: Text('Under Construction!')),
+      body: const Center(
+        child: Text('Open a PDF by the pressing the icon above'),
+      ),
     );
   }
 }
