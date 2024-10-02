@@ -1,6 +1,5 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:openpdf/features/display/model/pickedfilemodel.dart';
+import 'package:openpdf/features/display/model/pdf_model.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -10,8 +9,8 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  List<File>? pdfFiles;
-  bool isScanning = false;
+  Pickedfilemodel pickedfilemodel = Pickedfilemodel();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,14 +21,14 @@ class _HomeViewState extends State<HomeView> {
         actions: [
           IconButton(
             onPressed: () {
-              openFile(context);
+              pickedfilemodel.openLocalFile(context);
             },
             icon: const Icon(Icons.file_open_rounded),
           )
         ],
       ),
       body: const Center(
-        child: Text('Open a PDF by the pressing the icon above'),
+        child: Text('Open PDF with the above button'),
       ),
     );
   }
