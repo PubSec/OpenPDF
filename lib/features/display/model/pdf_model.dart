@@ -62,13 +62,23 @@ class Pickedfilemodel {
             content:
                 const Text("Permission permanently denied. Go to settings?"),
             action: SnackBarAction(
-                label: 'Settings',
-                onPressed: () {
-                  openAppSettings();
-                }),
+              label: 'Settings',
+              onPressed: () {
+                openAppSettings();
+              },
+            ),
           ),
         );
       }
     }
   }
+}
+
+class UserFile {
+  String fileName;
+  String filePath;
+  Icon fileIcon = const Icon(Icons.picture_as_pdf);
+  int exitPageNumber = 0;
+
+  UserFile({required this.fileName, required this.filePath});
 }

@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:anim_search_bar/anim_search_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:openpdf/features/display/model/pdf_model.dart';
 
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
@@ -69,6 +70,7 @@ class _PdfViewState extends State<PdfView> {
                   searchText = _textEditingController.text;
                 });
                 _pdfViewerController.searchText(searchText);
+                UserFile(fileName: 's', filePath: 's', fileIcon: Icon(Ucn));
               }
             },
             onSuffixTap: _textEditingController.clear,
@@ -78,7 +80,6 @@ class _PdfViewState extends State<PdfView> {
       body: SfPdfViewer.file(
         controller: _pdfViewerController,
         widget.pdfFile,
-        canShowTextSelectionMenu: false,
       ),
     );
   }
