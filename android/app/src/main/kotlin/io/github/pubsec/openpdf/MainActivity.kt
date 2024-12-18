@@ -1,4 +1,4 @@
-package io.github.pubsec
+package io.github.pubsec.openpdf
 
 import io.flutter.embedding.android.FlutterActivity
 

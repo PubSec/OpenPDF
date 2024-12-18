@@ -18,17 +18,12 @@ class _HomeViewState extends State<HomeView> {
       appBar: AppBar(
         centerTitle: true,
         title: const Text('OpenPDF'),
-        actions: [
-          IconButton(
-            onPressed: () {
-              pickedfilemodel.openLocalFile(context);
-            },
-            icon: const Icon(Icons.file_open_rounded),
-          )
-        ],
       ),
-      body: const Center(
-        child: Text('Open PDF with the above button'),
+      body: Center(
+        child: TextButton(
+          child: const Text('Open PDF with the above button'),
+          onPressed: () {},
+        ),
       ),
     );
   }
