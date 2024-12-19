@@ -81,4 +81,8 @@ class UserFile {
   int exitPageNumber = 0;
 
   UserFile({required this.fileName, required this.filePath});
+
+  List<String> filePathCollector() {
+    return [''];
+  }
 }

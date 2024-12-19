@@ -19,12 +19,7 @@ class _HomeViewState extends State<HomeView> {
         centerTitle: true,
         title: const Text('OpenPDF'),
       ),
-      body: Center(
-        child: TextButton(
-          child: const Text('Open PDF with the above button'),
-          onPressed: () {},
-        ),
-      ),
+      body: null,
     );
   }
 }
