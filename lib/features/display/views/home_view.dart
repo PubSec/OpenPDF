@@ -9,8 +9,7 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  Pickedfilemodel pickedfilemodel = Pickedfilemodel();
-
+  UserFile file = UserFile();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
