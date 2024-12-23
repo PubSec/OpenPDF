@@ -4,7 +4,7 @@ import 'package:openpdf/features/display/views/home_view.dart';
 
 // TODO: Show in 'Open with' options
 void main() {
-  runApp(const MyApp());
+  runApp(ProviderScope(child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {

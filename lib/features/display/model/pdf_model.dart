@@ -1,7 +1,4 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:openpdf/features/display/views/pdf_view.dart';
 // import 'package:file_picker/file_picker.dart';
 
 // Handles picking and pushing the file to a view page
