@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:openpdf/core/theme/theme_data.dart';
-import 'package:openpdf/features/display/views/home_view.dart';
+import 'package:openpdf/views/home_view.dart';
 
 // TODO: Show in 'Open with' options
 void main() {
-  runApp(ProviderScope(child: const MyApp()));
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {

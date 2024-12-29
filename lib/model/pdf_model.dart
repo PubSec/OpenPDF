@@ -76,10 +76,4 @@ class UserFile {
   String filePath = '';
   Icon fileIcon = const Icon(Icons.picture_as_pdf);
   int exitPageNumber = 0;
-
-  List<String> filePathCollector() {
-    return [
-      fileName,
-    ];
-  }
 }
