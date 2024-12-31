@@ -1,65 +1,55 @@
-import 'dart:io';
-import 'package:device_info_plus/device_info_plus.dart';
-import 'package:external_path/external_path.dart';
 import 'package:flutter/material.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:openpdf/provider/file_provider.dart';
 
-class HomeView extends StatefulWidget {
+class HomeView extends ConsumerStatefulWidget {
   const HomeView({super.key});
 
   @override
-  State<HomeView> createState() => _HomeViewState();
+  ConsumerState<HomeView> createState() => _HomeViewState();
 }
 
-class _HomeViewState extends State<HomeView> {
-  Future<void> getFiles(String directoryPath) async {
-    try {
-      var rootDirectory = Directory(directoryPath);
-      var directories = rootDirectory.list(recursive: false);
-      directories.forEach((element) {
-        if (element is File) {
-          if (element.path.split(".").last == "pdf") {
-            debugPrint("PDF File Name : ${element.path.split("/").last}");
-            // pdfFilesadd(element.path);
-          }
-        } else {
-          getFiles(element.path);
-        }
-      });
-    } catch (e) {
-      debugPrint(e.toString());
-    }
-  }
-
-  Future<void> baseDirectory() async {
-    DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
-    AndroidDeviceInfo androidDeviceInfo = await deviceInfoPlugin.androidInfo;
-    if (androidDeviceInfo.version.sdkInt < 30) {
-      PermissionStatus permissionStatus = await Permission.storage.request();
-      if (permissionStatus.isGranted) {
-        var rootDirectory = await ExternalPath.getExternalStorageDirectories();
-        await getFiles(rootDirectory.first);
-      }
-    } else {
-      PermissionStatus permissionStatus =
-          await Permission.manageExternalStorage.request();
-      if (permissionStatus.isGranted) {
-        var rootDirectory = await ExternalPath.getExternalStorageDirectories();
-        await getFiles(rootDirectory.first);
-      }
-    }
-  }
-
+class _HomeViewState extends ConsumerState<HomeView> {
   @override
   Widget build(BuildContext context) {
+    var allPdfs = ref.watch(fileNotifierProvider.notifier).baseDirectory();
+
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
-        actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.abc))],
+        actions: [
+          IconButton(
+            onPressed: () {
+              ref.watch(fileNotifierProvider.notifier).baseDirectory();
+            },
+            icon: const Icon(Icons.abc),
+          )
+        ],
         centerTitle: true,
         title: const Text('OpenPDF'),
       ),
-      body: null,
+      body: FutureBuilder(
+        future: allPdfs,
+        builder: (context, snapshot) {
+          if (snapshot.data == ConnectionState.waiting) {
+            return CircularProgressIndicator();
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else if (!snapshot.hasData) {
+            return Center(child: Text('No episodes found.'));
+          } else {
+            dynamic files = snapshot.data;
+            return ListView.builder(
+              itemCount: 10,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(files[index]),
+                );
+              },
+            );
+          }
+        },
+      ),
     );
   }
 }
