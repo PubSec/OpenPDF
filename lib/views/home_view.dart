@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:openpdf/model/pdf_model.dart';
 import 'package:openpdf/provider/file_provider.dart';
+import 'package:openpdf/views/pdf_view.dart';
 
 class HomeView extends ConsumerStatefulWidget {
   const HomeView({super.key});
@@ -17,14 +21,6 @@ class _HomeViewState extends ConsumerState<HomeView> {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
-        actions: [
-          IconButton(
-            onPressed: () {
-              ref.watch(fileNotifierProvider.notifier).baseDirectory();
-            },
-            icon: const Icon(Icons.abc),
-          )
-        ],
         centerTitle: true,
         title: const Text('OpenPDF'),
       ),
@@ -32,18 +28,28 @@ class _HomeViewState extends ConsumerState<HomeView> {
         future: allPdfs,
         builder: (context, snapshot) {
           if (snapshot.data == ConnectionState.waiting) {
-            return CircularProgressIndicator();
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
+            return const CircularProgressIndicator();
           } else if (!snapshot.hasData) {
-            return Center(child: Text('No episodes found.'));
+            return const Center(child: Text('No files found.'));
           } else {
-            dynamic files = snapshot.data;
+            List<PdfFileModel> files = snapshot.data!;
             return ListView.builder(
-              itemCount: 10,
+              itemCount: files.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  title: Text(files[index]),
+                  leading: files[index].fileIcon,
+                  title: Text(files[index].fileName),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PdfView(
+                          pdfFile: File(files[index].filePath),
+                          pdfTitle: files[index].fileName,
+                        ),
+                      ),
+                    );
+                  },
                 );
               },
             );
