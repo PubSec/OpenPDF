@@ -34,7 +34,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
           } else {
             List<PdfFileModel> files = snapshot.data!;
             return ListView.builder(
-              cacheExtent: files / 2,
+              cacheExtent: (files.length / 2),
               itemCount: files.length,
               itemBuilder: (context, index) {
                 return ListTile(
