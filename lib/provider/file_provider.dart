@@ -16,6 +16,10 @@ class FileNotifier extends Notifier<Future<List<PdfFileModel>>> {
   String extractFileName(String filePath) {
     if (filePath.endsWith('.pdf')) {
       String name = filePath.split('/').last;
+      if (name.contains('.')) {
+        int lastPointIndex = name.lastIndexOf('.');
+        name = name.substring(0, lastPointIndex);
+      }
       return name;
     } else {
       return 'Unable to get file name';
@@ -78,7 +82,6 @@ class FileNotifier extends Notifier<Future<List<PdfFileModel>>> {
     } catch (e) {
       debugPrint(e.toString());
     }
-    print(pdfFilePath.length);
     return pdfFilePath;
   }
 }

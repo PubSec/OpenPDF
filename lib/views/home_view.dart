@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:openpdf/model/pdf_model.dart';
@@ -27,8 +25,8 @@ class _HomeViewState extends ConsumerState<HomeView> {
       body: FutureBuilder(
         future: allPdfs,
         builder: (context, snapshot) {
-          if (snapshot.data == ConnectionState.waiting) {
-            return const CircularProgressIndicator();
+          if (ConnectionState.waiting == snapshot.connectionState) {
+            return const Center(child: CircularProgressIndicator());
           } else if (!snapshot.hasData) {
             return const Center(child: Text('No files found.'));
           } else {
@@ -45,8 +43,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => PdfView(
-                          pdfFile: File(files[index].filePath),
-                          pdfTitle: files[index].fileName,
+                          pdfFile: files[index],
                         ),
                       ),
                     );
