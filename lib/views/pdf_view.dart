@@ -54,7 +54,6 @@ class _PdfViewState extends State<PdfView> {
         // controller: _pdfViewerController,
         params: PdfViewerParams(
           enableTextSelection: true,
-          verticalCacheExtent: 30,
         ),
         widget.pdfFile.filePath,
       ),
