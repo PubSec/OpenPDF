@@ -14,22 +14,22 @@ class PdfView extends StatefulWidget {
 }
 
 class _PdfViewState extends State<PdfView> {
-  // final TextEditingController _textEditingController = TextEditingController();
-  // final PdfViewerController _pdfViewerController = PdfViewerController();
+  final TextEditingController _textEditingController = TextEditingController();
+  final PdfViewerController _pdfViewerController = PdfViewerController();
 
-  // @override
-  // void initState() {
-  //   _textEditingController;
-  //   _pdfViewerController;
-  //   super.initState();
-  // }
+  @override
+  void initState() {
+    _textEditingController;
+    _pdfViewerController;
+    super.initState();
+  }
 
-  // @override
-  // void dispose() {
-  //   _textEditingController;
-  //   _pdfViewerController;
-  //   super.dispose();
-  // }
+  @override
+  void dispose() {
+    _textEditingController;
+    _pdfViewerController;
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
