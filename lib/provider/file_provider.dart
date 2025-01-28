@@ -42,7 +42,6 @@ class FileNotifier extends Notifier<Future<List<PdfFileModel>>> {
         return pdfFiles;
       } else {
         // Handle permission denied case
-
         return [];
       }
     } else {

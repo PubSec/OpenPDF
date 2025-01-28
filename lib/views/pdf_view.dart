@@ -43,7 +43,7 @@ class _PdfViewState extends State<PdfView> {
           title: Text(
             maxLines: 1,
             widget.pdfFile.fileName.length > 10
-                ? '${widget.pdfFile.fileName.substring(0, 11)}...'
+                ? '${widget.pdfFile.fileName.substring(0, 15)}...'
                 : widget.pdfFile.fileName,
             softWrap: true,
             style: TextStyle(fontSize: 15, overflow: TextOverflow.ellipsis),
