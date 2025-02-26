@@ -17,7 +17,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
     var allPdfs = ref.watch(fileNotifierProvider.notifier).baseDirectory();
 
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
+      backgroundColor: Theme.of(context).colorScheme,
       appBar: AppBar(
         centerTitle: true,
         title: const Text('OpenPDF'),

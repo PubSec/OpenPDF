@@ -74,7 +74,7 @@ class _IntentHandlerState extends State<IntentHandler> {
       print('Error getting initial URI: $e');
     }
 
-    // Listen for incoming links
+    // Listen for incoming link
     _uriLinkSubscription = appLinks.uriLinkStream.listen(
       (Uri? uri) {
         if (uri != null) {
